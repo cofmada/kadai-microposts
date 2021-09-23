@@ -19,4 +19,4 @@ module SessionsHelper
     #else
     #return false
   end
-    
+end   
