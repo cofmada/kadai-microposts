@@ -18,6 +18,6 @@ class FavoritesController < ApplicationController
   private
   
   def set_micropost
-    micropost = Micropost.find(params[:micropost_id])
+    @micropost = Micropost.find(params[:micropost_id])
   end
 end
