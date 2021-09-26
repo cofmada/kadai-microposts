@@ -6,13 +6,13 @@ class FavoritesController < ApplicationController
   def create
     current_user.favo(micropost)
     flash[:success] = 'お気に入りに追加しました。'
-    redirect_to users
+    redirect_to likes_user_url
   end
 
   def destroy
     current_user.unfavo(micropost)
     flash[:success] = 'お気に入りを解除しました。'
-    redirect_to users
+    redirect_to likes_user_url
   end
   
   private

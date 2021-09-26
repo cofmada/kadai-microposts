@@ -11,8 +11,16 @@
             <p><%= like.content %></p>
           </div>
           <div>
-            <% if current_user.likes == @user.likes %>
-              <%= link_to "unFavo", micropost, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm' %>
+            <% if current_user.favoring?(micropost) %>
+              <%= form_with(model: current_user.favorites.find_by(micropost_id: like.user.id), method: :delete) do |f| %>
+                <%= hidden_field_tag :micropost_id, like.user.id %>
+                <%= f.submit 'unFavo', class: 'btn btn-danger w-100' %>
+              <% end %>
+            <% else %>
+              <%= form_with(model: current_user.favorites.build) do |f| %>
+                <%= hidden_field_tag :micropost_id, like.user.id %>
+                <%= f.submit 'Favo!', class: 'btn btn-primary w-100' %>
+              <% end %>
             <% end %>
           </div>
         </div>

@@ -47,6 +47,6 @@ class User < ApplicationRecord
   end
   
   def favoring?(micropost)
-    self.favo_microposts.include?(micropost)
+    self.likes.include?(micropost)
   end
 end
