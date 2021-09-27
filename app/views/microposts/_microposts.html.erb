@@ -10,16 +10,28 @@
           <div>
             <p><%= micropost.content %></p>
           </div>
-          <div>
+          <div class="btn-group">
             <% if current_user == micropost.user %>
-              <%= link_to "Delete", micropost, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm' %>
+              <%= link_to "Delete", micropost, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm mx-1' %>
+            <% end %>
+            
+            <% unless %>
+              <% if current_user.favoring?(micropost) %>
+                <%= form_with(model: current_user.favorites.find_by(micropost_id: micropost.id), method: :delete) do |f| %>
+                <%= hidden_field_tag :micropost_id, micropost.id %>
+                <%= f.submit 'unFavo', class: 'btn btn-secondary btn-sm mx-1' %>
+                <% end %>
+              <% else %>
+                <%= form_with(model: current_user.favorites.build) do |f| %>
+                <%= hidden_field_tag :micropost_id, micropost.id %>
+                <%= f.submit 'Favo!', class: 'btn btn-success btn-sm mx-1' %>
+                <% end %>
+              <% end %>
             <% end %>
           </div>
-          <div><%= render 'favorites/favo_btn' %></div>
         </div>
       </li>
     <% end %>
   </ul>
-
   <%== pagy_bootstrap_nav(@pagy) %>
 <% end %>
